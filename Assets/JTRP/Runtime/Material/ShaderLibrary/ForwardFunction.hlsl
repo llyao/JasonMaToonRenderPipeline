@@ -1,7 +1,3 @@
-
-
-
-
 float3 ShiftColorPurity(float3 color, float purity)
 {
     return lerp(Luminance(color), color, purity);

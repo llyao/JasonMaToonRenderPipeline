@@ -2,7 +2,7 @@
     #define JTRP_LITFUNCTION
     #include "LitDefine.hlsl"
     
-    ///////////// data /////////////
+    //================= Data =================
     void GetUVs(inout LitToonContext context, FragInputs input)
     {
         context.uv0 = input.texCoord0.xy;
@@ -100,7 +100,7 @@
         context.halfLambert = 0.5 * dot(context.N, context.L) + 0.5;
     }
     
-    ///////////// color //////////////
+    //================= Shading =================
     
     void GetBaseColor(inout LitToonContext context, float3 mainTex, float skyIntensity, float shadowPurity = 1,
     float3 shadowColor2 = 0, float shadowColorBlend2 = 0)
@@ -129,7 +129,7 @@
         return diffuse + ToonLightColorAddMode(context.brightBaseColor, context.pointLightColor);
     }
     
-    //////////// lighting ///////////
+    //================= Lighting =================
     float3 GetHighLight(float3 N, float3 V, float3 L, float3 lightColor, float shadowStep, float roughness,
     float intensity1 = 1, float intensity2 = 0, float maxValue = 0)
     {
@@ -254,7 +254,6 @@
         return context.shadowValue;
     }
     
-    // 0:shadow
     float GetSelfShadow(LitToonContext context, PositionInputs posInput)
     {
         #ifndef _ENABLE_SELFSHADOW
@@ -266,6 +265,7 @@
             context.N, dirLight.shadowIndex, context.L);
             attenuation = StepAntiAliasing(attenuation, 0.5);
             
+            // 0:shadow
             float selfShadow = (attenuation * 0.5) + 0.5;
             return clamp(selfShadow, 0.001, 1);
         #endif
